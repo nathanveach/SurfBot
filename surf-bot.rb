@@ -19,9 +19,8 @@ from = '+17144553380' # Your Twilio number
 to = '+17149325629' # Your mobile phone number
 
 
-
 client.messages.create(
-from: from,
-to: to,
-body: status
+	from: from,
+	to: to,
+	body: status
 )
