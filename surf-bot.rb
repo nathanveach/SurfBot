@@ -3,10 +3,14 @@ require 'nokogiri'
 require 'envyable'
 require 'twilio-ruby'
 
-url ="https://www.surfline.com/surf-report/17th-st-/5842041f4e65fad6a77088eb"
+url = "https://www.surfline.com/surf-report/17th-st-/5842041f4e65fad6a77088eb"
 page = Nokogiri::HTML(open(url))
-status = page.css('div.quiver-colored-condition-bar').text
 
+status = page.css('div.quiver-colored-condition-bar').text
+height = page.css('div.quiver-spot-forecast-summary__stat-container--surf-height').text
+tide = page.css('div.quiver-spot-forecast-summary__stat-container--tide').text
+wind = page.css('div.quiver-spot-forecast-summary__stat-container--surf-height').text
+temp = page.css('div.quiver-water-temp').text
 
 Envyable.load('./config/env.yml')
 
@@ -19,8 +23,20 @@ from = '+17144553380' # Your Twilio number
 to = '+17149325629' # Your mobile phone number
 
 
-client.messages.create(
-	from: from,
-	to: to,
-	body: status
-)
+
+
+if (status.include?("FAIR") || status.include?("GOOD"))
+	client.messages.create(
+		from: from,
+		to: to,
+		body: "\n#{status}\n \n#{height}\n \n#{tide}\n \n#{wind}\n \n#{temp}"
+	)
+end
+
+if status.include?("POOR") && !(status.include?("FAIR"))
+	client.messages.create(
+		from: from,
+		to: to,
+		body: "Sleep in, it suckssssssss"
+	)
+end
