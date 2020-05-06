@@ -28,10 +28,10 @@ from = '+17144553380' # Your Twilio number
 to = '+17149325629' # Your mobile phone number
 
 # Create message layout for the text
-message = "#{status}!\n
-					 \n Surf Height: #{height}\n
-					 \n Tide: #{tide}\n 
-					 \n #{next_tide}\n 
+message = "#{status}!
+					 \n Surf Height: #{height}
+					 \n Tide: #{tide}
+					 \n #{next_tide}
 					 \n Water Temp: #{temp}"
 
 puts message
